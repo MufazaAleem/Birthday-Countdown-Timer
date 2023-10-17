@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Countdown</title>
+  
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #countdown {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px;
+      color: #333;
+    }
+
+    label {
+      font-size: 18px;
+      margin: 10px;
+      color: #333;
+    }
+
+    input[type="date"] {
+      font-size: 16px;
+      padding: 5px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: #fff;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  
+  
+  
+</head>
+<body>
+  <h1>Countdown to Your Birthday</h1>
+  <label for="birthdate">Enter your birthdate: </label>
+  <input type="date" id="birthdate">
+  <button onclick="startCountdown()">Start Countdown</button>
+  <p id="countdown"></p>
+
+  <script>
+    let countdownInterval;
+
+    function startCountdown() {
+      const userBirthdate = new Date(document.getElementById('birthdate').value);
+      const now = new Date();
+      const birthday = new Date(now.getFullYear(), userBirthdate.getMonth(), userBirthdate.getDate());
+
+      if (now > birthday) {
+        birthday.setFullYear(now.getFullYear() + 1); 
+      }
+
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(updateCountdown, 1000);
+      updateCountdown();
+    }
+
+    function updateCountdown() {
+      const userBirthdate = new Date(document.getElementById('birthdate').value);
+      const now = new Date();
+      const birthday = new Date(now.getFullYear(), userBirthdate.getMonth(), userBirthdate.getDate());
+
+      if (now > birthday) {
+        birthday.setFullYear(now.getFullYear() + 1); 
+      }
+
+      const timeRemaining = birthday - now;
+
+      if (timeRemaining <= 0) {
+        document.getElementById('countdown').innerHTML = 'Happy Birthday!';
+      } else {
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+    }
+  </script>
+</body>
+</html>
